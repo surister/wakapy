@@ -1,0 +1,3 @@
+
+class EmptyFolderError(Exception):
+    pass
