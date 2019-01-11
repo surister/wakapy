@@ -10,8 +10,6 @@ class JsonFile:
         self.file = self._load_file()
         self._days = [Day(item) for item in self.file['days']]
 
-        Day(self.file['days'][0])
-
     def _load_file(self) -> dict:
         with open(self.fp, 'r') as f:
             a = json.load(f)

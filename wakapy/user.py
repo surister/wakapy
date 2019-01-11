@@ -74,6 +74,7 @@ class User:
                         temp_dic[container.name] = container.total_time
                     else:
                         temp_dic[container.name] += container.total_time
+
         return order_dict(temp_dic, True)
 
     def top_5_pie_chart(self, to_fetch: str) -> PieChart:
