@@ -1,10 +1,7 @@
-import pathlib
 import json
 from typing import List
 
 from wakapy.days import Day
-
-path = pathlib.PurePath(__file__).parent
 
 
 class JsonFile:

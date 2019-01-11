@@ -1,3 +1,5 @@
+
+
 class Parent:
     def __init__(self, _dict):
         self.digital = _dict.get('digital')
