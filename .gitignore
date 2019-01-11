@@ -118,5 +118,4 @@ dmypy.json
 
 # surister
 .idea/
-*.xml
 *.json
