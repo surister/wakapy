@@ -49,3 +49,6 @@ class User:
 
     def __repr__(self):
         return f'class <{self.__class__.__name__}({self.username})>'
+
+    def __len__(self):
+        return len(self.days)
