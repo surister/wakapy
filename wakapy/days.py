@@ -1,7 +1,8 @@
-from wakapy.containers import Os, Language, ADependency, Category, Editor, Project
+from wakapy.containers import Os, Language, Dependency, Category, Editor, Project
 
 
 class Day:
+
     def __init__(self, _dict):
 
         self.date = _dict.get('date')
@@ -11,6 +12,16 @@ class Day:
         self.editors = [Editor(i) for i in _dict.get('editors')]
         self.categories = [Category(i) for i in _dict.get('categories')]
         self.projects = [Project(i) for i in _dict.get('projects')]
+
+        self.is_empty = bool(not self.operative_systems)
+
+        self.container_dict = {'os': self.operative_systems,
+                               'lan': self.languages,
+                               'ent': self.entities,
+                               'edit': self.editors,
+                               'cat': self.categories,
+                               'proj': self.projects
+                               }
 
     def __repr__(self):
         return f"<class '{self.__class__.__name__}({self.date})'>"
