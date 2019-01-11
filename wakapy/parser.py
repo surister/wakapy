@@ -10,12 +10,12 @@ path = pathlib.PurePath(__file__).parent
 class JsonFile:
     def __init__(self, fp: str):
         self.fp = fp
-        self.file = self.load_file()
+        self.file = self._load_file()
         self._days = [Day(item) for item in self.file['days']]
 
         Day(self.file['days'][0])
 
-    def load_file(self) -> dict:
+    def _load_file(self) -> dict:
         with open(self.fp, 'r') as f:
             a = json.load(f)
             return a
@@ -29,4 +29,4 @@ class JsonFile:
         return self._days
 
     def __repr__(self):
-        return f'Wakapy.{self.__class__.__name__}({self.fp})'
+        return f"<'wakapy.{self.__class__.__name__}({self.fp})'>"
