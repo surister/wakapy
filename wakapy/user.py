@@ -1,7 +1,10 @@
 from pathlib import PurePath, Path
 
+
 from wakapy.parser import JsonFile
-from wakapy.exceptions import EmptyFolderError
+from wakapy.exceptions import EmptyFolderError, ContainerNotFound
+from wakapy.utils import order_dict
+from wakapy.plot import PieChart
 
 io_path = PurePath(PurePath(__file__).parent).joinpath('io/')
 files = [file for file in Path(io_path).iterdir()]
@@ -45,7 +48,36 @@ class User:
         self.website = user_info.get('website')
         self.writes_only = user_info.get('writes_only')
 
-        self.days = self.file.days
+        self.raw_day_containers = self.days[0].container_dict  # Just the first one makes it.
+
+    @property
+    def days(self):
+        return self.file.days
+
+    @property
+    def total_worked_days(self):
+        total = 0
+        for day in self.days:
+            if not day.is_empty:
+                total += 1
+        return total
+
+    def _fetch_data(self, to_fetch: str) -> dict:
+        if to_fetch not in self.raw_day_containers:
+            raise ContainerNotFound(f"<'Day'> class has no {to_fetch} container - attribute")
+
+        temp_dic = {}
+        for day in self.days:
+            if not day.is_empty:
+                for container in day.container_dict[to_fetch]:
+                    if container.name not in temp_dic.keys():
+                        temp_dic[container.name] = container.total_time
+                    else:
+                        temp_dic[container.name] += container.total_time
+        return order_dict(temp_dic, True)
+
+    def top_5_pie_chart(self, to_fetch: str) -> PieChart:
+        return PieChart(self._fetch_data(to_fetch))
 
     def __repr__(self):
         return f'class <{self.__class__.__name__}({self.username})>'
