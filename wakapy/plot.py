@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+import matplotlib.pylab as plb
+
+
+class PieChart:
+    def __init__(self, _dict):
+        self.dict = _dict
+
+        items = list(self.dict.keys())
+        data = list(map(lambda x: x / 3600, self.dict.values()))
+
+        if len(data) > 10:
+            item1 = items[:5]
+            data1 = data[:5]
+
+        else:
+            data1 = data
+            item1 = items
+
+        labels = list(map(lambda x: f'{round(x, 2)}h', data1))
+        fig, ax = plt.subplots(figsize=(5, 5), subplot_kw=dict(aspect='equal'))
+        wedges, texts, autotexts = ax.pie(data1, autopct=lambda pct: "{:0.1f}%\n".format(pct),
+                                          textprops=dict(color="black"), pctdistance=0.84, radius=1.5, labels=labels
+
+                                          )
+
+        ax.legend(wedges, item1,
+                  title="Top 5",
+                  loc=2,
+                  bbox_to_anchor=(1, 0)
+                  )
+
+        plt.setp(autotexts, size=7, weight='bold')
+
+    @staticmethod
+    def show():
+        plt.show()
+
+    @staticmethod
+    def save(fp):
+        plb.savefig(fp)
+
+    def __repr__(self):
+        return f"class <'{self.__class__.__name__}{self.dict}'>"
