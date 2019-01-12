@@ -72,8 +72,8 @@ class User:
 
         return order_dict(temp_dic, True)
 
-    def top_5_pie_chart(self, to_fetch: str) -> PieChart:
-        return PieChart(self._fetch_data(to_fetch))
+    def pie_chart(self, to_fetch: str, num: int) -> PieChart:
+        return PieChart(self._fetch_data(to_fetch), num=num)
 
     def __repr__(self):
         return f'class <{self.__class__.__name__}({self.username})>'
