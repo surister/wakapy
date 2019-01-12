@@ -16,7 +16,7 @@ class JsonFile:
             return a
 
     @property
-    def user_info(self) -> dict:
+    def user_data(self) -> dict:
         return self.file['user']
 
     @property

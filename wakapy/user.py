@@ -14,7 +14,7 @@ class User:
         self.fp = files[file_number] if fp is None else fp
 
         self.file = JsonFile(self.fp)
-        user_info = self.file.user_info
+        user_info = self.file.user_data
 
         self.display_name = user_info.get('display_name')
         self.created_at = user_info.get('created_at')
@@ -43,7 +43,7 @@ class User:
         self.website = user_info.get('website')
         self.writes_only = user_info.get('writes_only')
 
-        self.raw_day_containers = self.days[0].container_dict  # Just the first one makes it.
+        self._raw_day_containers = self.days[0].container_dict  # Just the first one makes it.
 
     @property
     def days(self):
@@ -58,7 +58,7 @@ class User:
         return total
 
     def _fetch_data(self, to_fetch: str) -> dict:
-        if to_fetch not in self.raw_day_containers:
+        if to_fetch not in self._raw_day_containers:
             raise ContainerNotFound(f"<'Day'> class has no {to_fetch} container - attribute")
 
         temp_dic = {}
