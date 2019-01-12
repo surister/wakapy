@@ -72,7 +72,7 @@ class User:
 
         return order_dict(temp_dic, True)
 
-    def pie_chart(self, to_fetch: str, num: int) -> PieChart:
+    def pie_chart(self, to_fetch: str, num: int =10) -> PieChart:
         return PieChart(self._fetch_data(to_fetch), num=num)
 
     def __repr__(self):
