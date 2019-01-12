@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import matplotlib.pylab as plb
 
 
 class PieChart:
@@ -31,6 +30,7 @@ class PieChart:
                   )
 
         plt.setp(autotexts, size=7, weight='bold')
+        plt.savefig('/home/surister/wakapy/wakapy/data/as.png')
 
     @staticmethod
     def show():
@@ -38,7 +38,7 @@ class PieChart:
 
     @staticmethod
     def save(fp):
-        plb.savefig(fp)
+        plt.savefig(fp)
 
     def __repr__(self):
         return f"class <'{self.__class__.__name__}{self.dict}'>"

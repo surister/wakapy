@@ -1,18 +1,13 @@
-from pathlib import PurePath, Path
-
-
 from wakapy.parser import JsonFile
 from wakapy.exceptions import EmptyFolderError, ContainerNotFound
-from wakapy.utils import order_dict
+from wakapy.utils import order_dict, Constants
 from wakapy.plot import PieChart
-
-io_path = PurePath(PurePath(__file__).parent).joinpath('io/')
-files = [file for file in Path(io_path).iterdir()]
 
 
 class User:
     def __init__(self, fp=None, file_number=0):
 
+        files = Constants.data_files
         if not files and fp is None:
             raise EmptyFolderError('Io folder is empty and no file path was given')
 
