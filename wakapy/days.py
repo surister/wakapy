@@ -2,7 +2,6 @@ from wakapy.containers import Os, Language, Dependency, Category, Editor, Projec
 
 
 class Day:
-
     def __init__(self, _dict):
 
         self.date = _dict.get('date')
