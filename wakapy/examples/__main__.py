@@ -1,7 +1,7 @@
 from wakapy import User
 
+a = User('/home/surister/wakapy/wakapy/data/info.json')
 
-a = User()
-print(a.raw_day_containers)
-pie_chart = a.pie_chart('lan')
-pie_chart.show()
+a.get_days_between('2018-09-10', '2018-09-24')
+chart = a.pie_chart('cat', use_slice=True)
+chart.show()
