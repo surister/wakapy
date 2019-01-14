@@ -2,7 +2,7 @@ from wakapy.containers import Os, Language, Dependency, Category, Editor, Projec
 
 
 class Day:
-    def __init__(self, _dict):
+    def __init__(self, _dict: dict):
 
         self.date = _dict.get('date')
         self.operative_systems = [Os(i) for i in _dict.get('operating_systems')]
