@@ -4,7 +4,7 @@ from typing import List
 from wakapy.days import Day
 
 
-class JsonFile:
+class JsonDict:
     def __init__(self, fp: str):
         self.fp = fp
         self.file = self._load_file()
