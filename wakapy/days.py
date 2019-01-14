@@ -12,6 +12,8 @@ class Day:
         self.categories = [Category(i) for i in _dict.get('categories')]
         self.projects = [Project(i) for i in _dict.get('projects')]
 
+        self.year, self.month, self.day = self.date.split('-')
+
         self.is_empty = bool(not self.operative_systems)
 
         self.container_dict = {'os': self.operative_systems,
@@ -21,6 +23,9 @@ class Day:
                                'cat': self.categories,
                                'proj': self.projects
                                }
+
+    def split(self, splitwith: str) -> str:
+        return self.date.split(splitwith)
 
     def __repr__(self):
         return f"<class '{self.__class__.__name__}({self.date})'>"
