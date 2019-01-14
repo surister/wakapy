@@ -14,7 +14,7 @@ def get_labels(l, hours, items):
 
 
 class PieChart:
-    def __init__(self, _dict, num):
+    def __init__(self, _dict, num, dates=None):
         self.dict = _dict
         self.fig = None
 
@@ -30,16 +30,16 @@ class PieChart:
         wedges, texts = ax.pie(data1)
 
         ax.legend(wedges, labels,
-                  title=f"Top {num}",
+                  title=f"|{dates[0].date} | {dates[1].date}|",
                   loc=2,
                   bbox_to_anchor=(1, 0)
                   )
 
-    def show(self):
+    def show(self) -> None:
         self.fig = plt.gcf()
         plt.show()
 
-    def save(self, fp):
+    def save(self, fp: str) -> None:
         fig = self.fig if self.fig else plt.gcf()
         fig.savefig(fp, bbox_inches='tight', format='png', dpi=100)
 
