@@ -5,3 +5,4 @@ TODO
 
 2. Implement Projects
 
+3. Docstring and documentation
