@@ -1,9 +1,12 @@
 import datetime
 
+from typing import List
+
 from wakapy.parser import JsonDict
 from wakapy.exceptions import ContainerNotFound
 from wakapy.utils import order_dict
 from wakapy.plot import PieChart
+from wakapy.days import Day
 
 
 class Slice:
@@ -39,12 +42,16 @@ class Slice:
         if self.date1 > self.date2:
             raise ValueError('date 2 cannot be bigger than date 1')
 
-        self.raw_days = days
+        self._raw_days = days
 
-    def _get_sliced_days(self):
+    def __iter__(self):
+        for day in self.days:
+            yield day
+
+    def _get_sliced_days(self) -> List[Day]:
         index1 = None
         index2 = None
-        for index, day in enumerate(self.raw_days):
+        for index, day in enumerate(self._raw_days):
 
             if int(day.year) == self.date1.year:
                 if int(day.month) == self.date1.month:
@@ -58,14 +65,14 @@ class Slice:
 
         if None in (index1, index2):
             raise ValueError('One of your dates do not exist')
-        return self.raw_days[index1: index2 + 1]
+        return self._raw_days[index1: index2 + 1]
 
     @property
-    def days(self):
+    def days(self) -> List[Day]:
         return self._get_sliced_days()
 
     def __repr__(self):
-        return f'class <{self.__class__.__name__}>'
+        return f'class <{self.__class__.__name__}({self.days})>'
 
 
 class User:
@@ -102,20 +109,8 @@ class User:
         self.website = user_info.get('website')
         self.writes_only = user_info.get('writes_only')
 
-        self.slice = None
+        self.slice = (self.days[0], self.days[::-1][0])
         self._raw_day_containers = self.days[0].container_dict  # Just the first one makes it.
-
-    @property
-    def days(self):
-        return self.file.days
-
-    @property
-    def total_worked_days(self) -> int:
-        total = 0
-        for day in self.days:
-            if not day.is_empty:
-                total += 1
-        return total
 
     def _fetch_data(self, to_fetch: str, use_slice: bool) -> dict:
 
@@ -125,9 +120,8 @@ class User:
         if use_slice and self.slice:
             data = self.slice
         elif use_slice and not self.slice:
-            raise ValueError('There is no slice created')
+            raise ValueError('There is no slice created and sliced is set to True')
         else:
-
             data = self.days
 
         temp_dic = {}
@@ -142,12 +136,25 @@ class User:
 
         return order_dict(temp_dic, True)
 
-    def get_days_between(self, date1=None, date2=None) -> list:
-        self.slice = Slice(self.days, date_1=date1, date_2=date2).days
-        return self.slice
+    @property
+    def days(self) -> List[Day]:
+        return self.file.days
 
-    def pie_chart(self, to_fetch: str, num: int =10, use_slice=False) -> PieChart:
-        return PieChart(self._fetch_data(to_fetch, use_slice), num=num, dates=(self.slice[0], self.slice[::-1][0]))
+    @property
+    def total_worked_days(self) -> int:
+        total = 0
+        for day in self.days:
+            if not day.is_empty:
+                total += 1
+        return total
+
+    def get_slice(self, date1=None, date2=None) -> Slice:
+        _slice = Slice(self.days, date_1=date1, date_2=date2)
+        self.slice = _slice.days
+        return _slice
+
+    def pie_chart(self, to_fetch: str, num: int =10, sliced=False) -> PieChart:
+        return PieChart(self._fetch_data(to_fetch, sliced), num=num, dates=(self.slice[0], self.slice[::-1][0]))
 
     def __repr__(self):
         return f'class <{self.__class__.__name__}({self.username})>'
