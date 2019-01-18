@@ -20,8 +20,7 @@ class Day:
                                'lan': self.languages,
                                'ent': self.entities,
                                'edit': self.editors,
-                               'cat': self.categories,
-                               'proj': self.projects
+                               'cat': self.categories
                                }
 
     def split(self, splitwith: str) -> str:
