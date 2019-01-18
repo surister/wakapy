@@ -109,7 +109,7 @@ class User:
         self.website = user_info.get('website')
         self.writes_only = user_info.get('writes_only')
 
-        self.slice = (self.days[0], self.days[::-1][0])
+        self.slice = None
         self._raw_day_containers = self.days[0].container_dict  # Just the first one makes it.
 
     def _fetch_data(self, to_fetch: str, use_slice: bool) -> dict:
@@ -154,7 +154,12 @@ class User:
         return _slice
 
     def pie_chart(self, to_fetch: str, num: int =10, sliced=False) -> PieChart:
-        return PieChart(self._fetch_data(to_fetch, sliced), num=num, dates=(self.slice[0], self.slice[::-1][0]))
+        if not self.slice:
+            dates = self.days[0], self.days[::-1][0]
+        else:
+            dates = self.slice[0], self.slice[::-1][0]
+
+        return PieChart(self._fetch_data(to_fetch, sliced), num=num, dates=dates)
 
     def __repr__(self):
         return f'class <{self.__class__.__name__}({self.username})>'

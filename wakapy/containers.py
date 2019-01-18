@@ -37,6 +37,7 @@ class Project:
         self.languages = [Language(i) for i in _dict.get('languages')]
         self.operative_systems = [Os(i) for i in _dict.get('operating_systems')]
         self.grand_total = GrandTotal(_dict.get('grand_total'))
+        self.total_time = self.grand_total.total_time
 
         self.repr_string = f'-{self.num}' if self.is_untitled else ""
 
