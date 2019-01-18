@@ -118,4 +118,12 @@ dmypy.json
 
 # surister
 .idea/
+
+# debug
 data/
+
+# docs
+documentation
+source
+make.bat
+Makefile
