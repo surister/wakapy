@@ -13,6 +13,7 @@ class Parent:
         self.type = _dict.get('type')
 
     def __repr__(self):
+
         return f"class <'{self.__class__.__name__}({self.name})'>"
 
 
@@ -35,6 +36,7 @@ class Project:
         self.entities = [Entity(i) for i in _dict.get('entities')]
         self.languages = [Language(i) for i in _dict.get('languages')]
         self.operative_systems = [Os(i) for i in _dict.get('operating_systems')]
+        self.grand_total = GrandTotal(_dict.get('grand_total'))
 
         self.repr_string = f'-{self.num}' if self.is_untitled else ""
 
@@ -73,5 +75,10 @@ class Editor(Parent):
 
 
 class Branch(Parent):
+    def __init__(self, _dict):
+        super().__init__(_dict=_dict)
+
+
+class GrandTotal(Parent):
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
