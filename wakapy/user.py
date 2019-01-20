@@ -115,7 +115,8 @@ class User:
     def _fetch_data(self, to_fetch: str, use_slice: bool) -> dict:
 
         if to_fetch not in self._raw_day_containers:
-            raise ContainerNotFound(f"<'Day'> class has no {to_fetch} container - attribute")
+            raise ContainerNotFound(f"class <'Day()'> has no '{to_fetch}' container, possible containers are:"
+                                    f" {list(self._raw_day_containers.keys())}")
 
         if use_slice and self.slice:
             data = self.slice
@@ -126,7 +127,6 @@ class User:
 
         temp_dic = {}
         for day in data:
-
             if not day.is_empty:
                 for container in day.container_dict[to_fetch]:
                     if container.name not in temp_dic.keys():
