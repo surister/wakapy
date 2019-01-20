@@ -14,7 +14,7 @@ def get_labels(l, hours, items):
 
 
 class PieChart:
-    def __init__(self, _dict, num, dates=None):
+    def __init__(self, _dict, num: int, dates=None):
         self.dict = _dict
         self.fig = None
 
