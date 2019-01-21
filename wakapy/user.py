@@ -44,6 +44,9 @@ class Slice:
 
         self._raw_days = days
 
+    def __len__(self):
+        return len(self.days)
+
     def __iter__(self):
         for day in self.days:
             yield day
@@ -76,6 +79,76 @@ class Slice:
 
 
 class User:
+    r"""Represents a user containing all the data from source file
+
+        .. _wakatime: https://wakatime.com
+
+        Parameters
+        -----------
+        fp : :class:`str`
+            The file path to the Wakatime json file
+
+        Attributes
+        -----------
+        fp
+            :class:`str` - File path
+        file
+            The :class:`JsonDict` containing all the data.
+        display_name
+            :class:`str` - User's `wakatime`_ displayed name, usually @ + **username**.
+        created_at
+            :class:`str` - User's creation date, eg: *2018-08-02T15:40:06Z*.
+        email
+            :class:`str` - User's email
+        is_email_public
+            :class:`bool` - True if your email is set to public in `wakatime`_ settings.
+        full_name
+            :class:`str` - Full name if available in `wakatime`_ settings.
+        has_premium_features
+            :class:`bool` - True if user has premium features.
+        human_readable_website
+            :class:`str` - User's website
+        id
+            :class:`str` - User's id
+        is_email_confirmed
+            :class:`bool` - True if user's email is confirmed
+        is_hireable
+            :class:`bool` - True if user is set to hireable in `wakatime`_
+        languages_used_public
+            :class:`bool`
+        last_heartbeat
+            :class:`str` - Last time the user connected to wakatime
+        last_plugin
+            :class:`str` - Last plugin used by the user - Verbose
+        last_plugin_name
+            :class:`str` - Last plugin used by the user
+        last_project
+            :class:`str` - Last project the user worked on
+        location
+            :class:`str` - user's location if given
+        logged_time_public
+            :class:`bool`
+        modified_at
+            Optional[:class:`str`, :class:`NoneType`] - Last time user was modified
+        photo
+            :class:`str` - user's `wakatime`_ gravatar profile picture
+        photo_public
+            :class:`bool` - True if user's profile picture is public
+        plan
+            :class:`str` - user's `wakatime`_ paid plan, most common: basic.
+        timeout
+            :class:`int`
+        timezone
+            :class:`str` - user's timezone
+        username
+            :class:`str` - user's username
+        website
+            :class:`str` - user's website if given
+        writes_only
+            :class:`bool`
+        slice
+            default :class:`NoneType` contains a :class:`list` of days between 2 dates.
+        """
     def __init__(self, fp: str):
 
         self.fp = fp
@@ -138,10 +211,20 @@ class User:
 
     @property
     def days(self) -> List[Day]:
+        """
+        :property:
+
+        :return: List[:class:`Day`] - list containing **every** Day class
+        """
         return self.file.days
 
     @property
     def total_worked_days(self) -> int:
+        """
+        :property:
+
+        :return: :class:`int` - The total amount of days that have activity
+        """
         total = 0
         for day in self.days:
             if not day.is_empty:
@@ -149,11 +232,24 @@ class User:
         return total
 
     def get_slice(self, date1=None, date2=None) -> Slice:
+        """
+        :dates: Default :class:`NoneType`, can be either :class:`str` with the following format: YYYY-MM-DD or a :class:`datetime.date` object
+
+        :return: :class:`Slice`
+        """
         _slice = Slice(self.days, date_1=date1, date_2=date2)
         self.slice = _slice.days
         return _slice
 
     def pie_chart(self, to_fetch: str, num: int =10, sliced=False) -> PieChart:
+        """
+        Creates a pie chart with the given parameters.
+
+        :param to_fetch: :class:`str` container to search options are :class:`Day`.container_dict.
+        :param num: :class:`int` number of items
+        :param sliced: :class:`bool` True if you want to use the data from the sliced object you created beforehand.
+        :return: :class:`Piechart`
+        """
         if not self.slice:
             dates = self.days[0], self.days[::-1][0]
         else:
@@ -161,7 +257,29 @@ class User:
 
         return PieChart(self._fetch_data(to_fetch, sliced), num=num, dates=dates)
 
+    def fetch_data(self, to_fetch: str, sliced: bool) -> dict:
+        """
+        :param to_fetch: :class:`str` container to search options are :class:`Day`.container_dict.
+        :param sliced: :class:`bool` True if you want to use the data from the sliced object you created beforehand.
+        :return: :class:`dict` containing the data.
+
+        Note
+        ----
+        The fetched data is the total_time of each :class:`Day` container.(s).
+
+
+        This is an example of it: ::
+
+            # 'lan' - language
+            data = {'python': 253, 'bash': 623}
+        """
+        return self._fetch_data(to_fetch, sliced)
+
     def __repr__(self):
+        """
+
+        :return: :class:`str`
+        """
         return f'class <{self.__class__.__name__}({self.username})>'
 
     def __len__(self):
