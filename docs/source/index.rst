@@ -16,4 +16,4 @@ data processing by bundling the data into a convenient OOP scheme.
    install
    examples
    apiref
-   test
+
