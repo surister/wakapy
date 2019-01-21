@@ -12,9 +12,12 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..').replace('/docs', ''))
+sys.path.append(os.path.abspath('extensions'))
+print(os.path.abspath('extensions'))
+autodoc_mock_imports = ['matplotlib']
 
 
 # -- Project information -----------------------------------------------------
@@ -43,7 +46,11 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
+    'sphinx.ext.napoleon'
 ]
+autodoc_member_order = 'bysource'
+# autoapi_type = 'python'
+# autoapi_dirs = ['/home/surister/wakapy/wakapy/']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
