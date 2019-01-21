@@ -4,17 +4,25 @@ Installation and Set up
 
 .. _install:
 
-Download:
+Downloading the library:
 ---------------------------------
 
 Using bare git::
 
-     $ git clone https://github.com/surister/wakapy
+     $ git clone https://github.com/surister/wakapy.git
 
+Using pip::
 
-ss
-__
+    $ pip install wakapy
 
 Using pipenv::
 
-     $ pipenv install -e git+https://github.com/surister/wakapy@master#egg=wakapy
+     $ pipenv install wakapy
+
+Downloading the Wakatime data:
+------------------------------
+1. Log in Wakatime
+2. Settings
+3. Export my coding activities
+
+.. note:: Keep the data in the original JSON format.
