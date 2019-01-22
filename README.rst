@@ -32,7 +32,8 @@ on it
 
 Quick example:
 --------------
-::
+Code: ::
+
     from wakapy import User
 
     user = User('/home/surister/data.json')
@@ -46,4 +47,4 @@ Quick example:
 
 This would output:
 
-.. image:: /_static/example1.png
+.. image:: /docs/source/_static/example1.png
