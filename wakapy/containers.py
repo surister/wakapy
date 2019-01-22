@@ -1,6 +1,44 @@
 
 
 class Parent:
+    """
+    Parent for all bare containers.
+
+    Parameters
+    ----------
+        _dict : :class:`dict`
+            Dictionary containing every specific container data.
+
+    Attributes
+    ----------
+    digital
+        :class:`str`
+        Time in digital format
+    name
+        :class:`str`
+        Name, example: 'Python' if os, 'Pycharm' if editor...
+    hours
+        :class:`int`
+        hours
+    minutes
+        :class:`int`
+        minutes
+    seconds
+        :class:`int`
+        seconds
+    percent
+        :class:`float`
+        Percentage
+    text
+        :class:`str`
+        Time written in text format, ex: 5 minutes.
+    total_time
+        :class:`int`
+        total time in seconds
+    type
+        Usually :class:`NoneType`
+
+    """
     def __init__(self, _dict):
         self.digital = _dict.get('digital')
         self.hours = _dict.get('hours')
@@ -18,6 +56,51 @@ class Parent:
 
 
 class Project:
+    """
+    Represents a Project. It contains every container-bare plus three more.
+
+    This class adds overall more accuracy in the timings within a  :class:`.Day`
+
+    Parameters
+    ----------
+    _dict : :class:`dict`
+        Dictionary that contains all the data.
+
+    Attributes
+    ----------
+    name
+        :class:`str`
+        Name of the project
+    num
+        :class:`int`
+        If a project is untitled, they are counted as <untitled-num>
+    branches
+        List[:class:`.Branch`]
+        list of worked branches within the Project
+    operative_systems
+        List[:class:`.Os`]
+        list containing every Os object, representing every s that was used this **date**.
+    languages
+        List[:class:`.Language`]
+        list containing every Language object, representing every programming language that was used this **date**.
+    entities
+        List[:class:`.Dependency`]
+        list containing every Dependency object, representing every dependency that was used this **date**.
+    editors
+        List[:class:`.Editor`]
+        list containing every Editor object, representing every editor that was used this **date**.
+    categories
+        List[:class:`.Category`]
+        list containing every Category object, representing every category that was used this **date**.
+    dependencies
+        List[:class:`.Dependency`]
+        list containing every Dependency object, representing every dependency that was used this **date**.
+    grand_total
+        :class:`dict`
+        Contains the total time data
+
+
+    """
     untitled_counter = 0
 
     def __init__(self, _dict):
@@ -46,40 +129,75 @@ class Project:
 
 
 class Os(Parent):
+    """
+    Class representing a wakatime Operative System data within a one day range.
+    """
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
 
 
 class Language(Parent):
+    """
+    Class representing a wakatime Programming language data within a one day range.
+    """
+
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
 
 
 class Entity(Parent):
+    """
+    Class representing a wakatime Entity data within a one day range.
+    A entity can be a module, dependency.. it may vary from plugin to plugin.
+    It's only present in :class:`.Project`
+    """
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
 
 
 class Dependency(Parent):
+    """
+    Class representing a wakatime Entity data within a one day range.
+    A entity can be a module, dependency.. it may vary from plugin to plugin.
+    """
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
 
 
 class Category(Parent):
+    """
+    Class representing a wakatime Category data within a one day range, usually 'Coding'
+    """
+
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
 
 
 class Editor(Parent):
+    """
+    Class representing a wakatime Editor data within a one day range, it does not distinguish
+    between editors and IDEs
+    """
+
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
 
 
 class Branch(Parent):
+
+    """
+    Class representing a wakatime Branch data within a one day range.
+    It's only present in :class:`.Project`
+    """
+
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
 
 
 class GrandTotal(Parent):
+    """
+    Class representing a wakatime Grand total data within a one day range.
+        It's only present in :class:`.Project`
+    """
     def __init__(self, _dict):
         super().__init__(_dict=_dict)
