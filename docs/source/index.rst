@@ -2,8 +2,11 @@
 Welcome to wakapy
 =====================
 
+
 .. image:: https://readthedocs.org/projects/wakapy/badge/?version=latest
+
 :target: https://wakapy.readthedocs.io/en/latest/?badge=latest
+
 :alt: Documentation Status
 
 
@@ -20,3 +23,4 @@ Documentation Contents
    install
    examples
    apiref
+
