@@ -2,8 +2,8 @@
 Introduction
 ====================
 
-Wakapy is a python library aiming for Python 3.6+ versions whose purpose
-is to provide easy data manipulation to the developer.
+wakapy is a python library aiming for Python 3.6+ versions whose purpose
+is to provide easy Wakatime data manipulation to the developer.
 
 .. note:: 1. This project is not related to `WakaTime <https://wakatime.com/>`_ or its developer team in any way.
           2. This project revolves around the json file that you can :ref:`download <install>` from your **Wakatime account**

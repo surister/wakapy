@@ -11,8 +11,10 @@ _______________________________
 
     user = User('/home/surister/data.json')
     chart = user.pie_chart('lan')
-    # lan = languages. See the different options here.
+    # lan = languages. See the different options
+    # in Day.raw_containers
     chart.show()
+
     # Shows the chart.
     chart.save('/home/surister/mychart.png')
     # Saves the chart to the desired filepath.
