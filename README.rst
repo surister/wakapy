@@ -6,7 +6,7 @@ Wakapy is a python library aiming for Python 3.6+ versions whose purpose
 is to provide easy data manipulation to the developer.
 
 .. note:: 1. This project is not related to `WakaTime <https://wakatime.com/>`_ or its developer team in any way.
-          2. This project revolves around the json file that you can :ref:`download <install>` from your **Wakatime account**
+          2. This project revolves around the json file that you can download from your **Wakatime account**
 
 
 Wakapy basically loads the **big** json file containing all of your data provided for free by WakaTime and
@@ -27,3 +27,23 @@ similar to the Wakatime *paid features*
 4. Some nice **charts** out of the box for the people who just want to
 get a quick insight of the data without putting too much effort
 on it
+
+
+
+Quick example:
+--------------
+::
+    from wakapy import User
+
+    user = User('/home/surister/data.json')
+    chart = user.pie_chart('lan')
+    # lan = languages. See the different options here.
+    chart.show()
+    # Shows the chart.
+    chart.save('/home/surister/mychart.png')
+    # Saves the chart to the desired filepath.
+
+
+This would output:
+
+.. image:: /_static/example1.png
