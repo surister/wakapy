@@ -1,5 +1,5 @@
 =====================
-Wakapy documentation
+Welcome to wakapy
 =====================
 
 .. image:: https://travis-ci.org/cehbrecht/quick-sphinx-tutorial.svg?branch=master
@@ -9,11 +9,13 @@ Wakapy documentation
 Welcome to the wakapy documentation, a Python 3.6+ library that facilitates your WakaTime
 data processing by bundling the data into a convenient OOP scheme.
 
+Documentation Contents
+----------------------
+
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
 
    intro
    install
    examples
    apiref
-
