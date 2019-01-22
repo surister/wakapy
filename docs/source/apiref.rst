@@ -6,7 +6,6 @@ Api reference
 
 |
 
-
 .. note::
 
     The data containers are divided in two sections:
