@@ -6,12 +6,43 @@ from wakapy.parser import JsonDict
 from wakapy.exceptions import ContainerNotFound
 from wakapy.utils import order_dict
 from wakapy.plot import PieChart
-from wakapy.days import Day
+from wakapy.day import Day
 
 
 class Slice:
-    def __init__(self, days, date_1=None, date_2=None):
+    """
+    Given two valid dates it'll slice and save them. It always includes the given dates.
 
+    Parameters
+    ----------
+        days : List[:class:`.Day`]
+            The list of Day objects to slice by dates.
+        dates : Union[:class:`str`, :class:`datetime.date`]
+            date_1 has to be lower than date_2 and both have to follow the YYYY-MM-DD format.
+
+    Note
+    ----
+    str given dates will be converted to :class:`datetime.date`, so both dates can be given in any of those 2 formats independently.
+    The slicing will be done automatically upon creating the class with two valid dates.
+    This class can be iterated, yields :class:`.Day` from :meth:`days`
+
+    So this twos are equivalent: ::
+
+        myslice = Slice(dates_list, date1, date2)
+
+        for day in myslice:
+            print(day.date)
+
+
+            for day in myslice.days:
+                print(day.date)
+
+    Attributes
+    ----------
+    date_1 see dates.
+    date_2 see dates.
+    """
+    def __init__(self, days, date_1=None, date_2=None):
         if not isinstance(date_1, str) and not isinstance(date_1, str) \
                 and not isinstance(date_1, datetime.date) and not isinstance(date_2, datetime.date):
             raise TypeError("Parameters given have to be either <'str'> or <'datetime.date> objects")
@@ -40,7 +71,7 @@ class Slice:
             index += 1
 
         if self.date1 > self.date2:
-            raise ValueError('date 2 cannot be bigger than date 1')
+            raise ValueError(f'{self.date1} cannot be bigger than {self.date2}')
 
         self._raw_days = days
 
@@ -72,6 +103,11 @@ class Slice:
 
     @property
     def days(self) -> List[Day]:
+        """
+        :property:
+
+        :return: List[:class:`.Day`] sliced.
+        """
         return self._get_sliced_days()
 
     def __repr__(self):
@@ -79,7 +115,7 @@ class Slice:
 
 
 class User:
-    r"""Represents a user containing all the data from source file
+    """Represents a user containing all the data from source file
 
         .. _wakatime: https://wakatime.com
 
@@ -93,7 +129,7 @@ class User:
         fp
             :class:`str` - File path
         file
-            The :class:`JsonDict` containing all the data.
+            The :class:`.JsonDict` containing all the data.
         display_name
             :class:`str` - User's `wakatime`_ displayed name, usually @ + **username**.
         created_at
@@ -214,7 +250,7 @@ class User:
         """
         :property:
 
-        :return: List[:class:`Day`] - list containing **every** Day class
+        :return: List[:class:`.Day`] - list containing **every** Day class
         """
         return self.file.days
 
@@ -235,7 +271,7 @@ class User:
         """
         :dates: Default :class:`NoneType`, can be either :class:`str` with the following format: YYYY-MM-DD or a :class:`datetime.date` object
 
-        :return: :class:`Slice`
+        :return: :class:`.Slice`
         """
         _slice = Slice(self.days, date_1=date1, date_2=date2)
         self.slice = _slice.days
@@ -245,10 +281,10 @@ class User:
         """
         Creates a pie chart with the given parameters.
 
-        :param to_fetch: :class:`str` container to search options are :class:`Day`.container_dict.
+        :param to_fetch: :class:`str` container to search options are :class:`.Day`.container_dict.
         :param num: :class:`int` number of items
         :param sliced: :class:`bool` True if you want to use the data from the sliced object you created beforehand.
-        :return: :class:`Piechart`
+        :return: :class:`.PieChart`
         """
         if not self.slice:
             dates = self.days[0], self.days[::-1][0]
@@ -259,13 +295,13 @@ class User:
 
     def fetch_data(self, to_fetch: str, sliced: bool) -> dict:
         """
-        :param to_fetch: :class:`str` container to search options are :class:`Day`.container_dict.
+        :param to_fetch: :class:`str` container to search options are :class:`.Day`.container_dict.
         :param sliced: :class:`bool` True if you want to use the data from the sliced object you created beforehand.
         :return: :class:`dict` containing the data.
 
         Note
         ----
-        The fetched data is the total_time of each :class:`Day` container.(s).
+        The fetched data is the total_time of each :class:`.Day` container.(s).
 
 
         This is an example of it: ::
@@ -277,10 +313,12 @@ class User:
 
     def __repr__(self):
         """
-
-        :return: :class:`str`
+        :return: :class:`str` self.class.name(username) (dummy)
         """
         return f'class <{self.__class__.__name__}({self.username})>'
 
     def __len__(self):
+        """
+        :return: :class:`int` number of total days, regardless of activity.
+        """
         return len(self.days)
