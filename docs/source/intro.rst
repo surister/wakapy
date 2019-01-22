@@ -13,8 +13,8 @@ Wakapy basically loads the **big** json file containing all of your data provide
 group every piece of data in convenient classes. The Wakatime json file is big, a 161 days file, where only 121 days actually
 contain relevant data is roughly 75k long (in my case).
 
-Wakapy actual features are:
----------------------------
+Wakapy features:
+----------------
 1. **Extensive data class containerization**
 (Every bit of data from the json file is accessible with the library).
 
