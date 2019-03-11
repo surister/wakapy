@@ -112,4 +112,4 @@ __________________________________
 
 .. image:: /_static/example3.png
 
-.. note:: This examples and images can also be found in the examples folder
+.. note:: These examples and images can also be found in the examples folder
